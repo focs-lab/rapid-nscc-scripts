@@ -146,7 +146,7 @@ def run_test(trace_path: str, engine: str, sampling_rate: float):
     tests_stats = []
     num_iters = NUM_TEST_ITERS if sampling_rate != 1 else 10
     for _ in range(num_iters):
-        output = subprocess.check_output(["java", "-cp", "rapid.jar:./lib/*:./lib/jgrapht/*", engine, "-f", "std", "-p", trace_path, "-r", str(sampling_rate)])
+        output = subprocess.check_output(["java", "-Xmx8g", "-cp", "rapid.jar:./lib/*:./lib/jgrapht/*", engine, "-f", "std", "-p", trace_path, "-r", str(sampling_rate)])
         test_stats = parse_rapid_output(output.decode())
         test_stats.test_name = trace_path
         test_stats.test_engine = engine
@@ -182,9 +182,9 @@ def main():
     #             run_test(trace_path, eng, sr)
                 # args = (trace_path, eng, sr)
 
-    # cpu_count() on NSCC returns 256, which may not actually be the number of cpus allocated to the job
-    # now it is hardcoded to 63 for simplicity
-    with Pool(processes=63) as pool:
+    # Somehow cpu_count() on NSCC returns 256, which may not actually be the number of cpus allocated to the job
+    # now it is hardcoded to 64 for simplicity
+    with Pool(processes=64) as pool:
         pool.starmap(run_test, args)
 
 
