@@ -1,0 +1,34 @@
+- name: sr003
+  iterations: 50
+  sampling_rate: 0.03
+  engines:
+    - HBEpoch
+    - UClockEpoch
+
+- name: sr005
+  iterations: 50
+  sampling_rate: 0.05
+  engines:
+    - HBEpoch
+    - UClockEpoch
+
+- name: sr010
+  iterations: 50
+  sampling_rate: 0.1
+  engines:
+    - HBEpoch
+    - UClockEpoch
+
+- name: sr020
+  iterations: 50
+  sampling_rate: 0.20
+  engines:
+    - HBEpoch
+    - UClockEpoch
+
+- name: nosampling
+  iterations: 10
+  sampling_rate: 1
+  engines:
+    - HBEpoch
+    - UClockEpoch

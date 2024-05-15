@@ -9,11 +9,13 @@ from dataclasses import dataclass
 from typing import List
 from datetime import datetime
 
-from multiprocessing import Pool, cpu_count
+from multiprocessing import Pool
 from itertools import product
+from subprocess import check_output
 
 
 TRACES_LIST_YAML = "traces.yaml"
+CONFIG_LIST_YAML = "config.yaml"
 # CMD_PREFIX = 'java -cp "rapid.jar:./lib/*:./lib/jgrapht/*" Minjian -f std -p '
 NUM_TEST_ITERS = 50
 
@@ -137,14 +139,14 @@ def parse_rapid_output(output: str) -> TestStats:
 
     return TestStats(test_name="", test_engine="", test_sampling_rate=0, duration=duration, num_warnings=num_warnings)
 
-def run_test(trace_path: str, engine: str, sampling_rate: float):
+def run_test(trace_path: str, engine: str, sampling_rate: float, num_iters: int):
     global DATETIME_STR, REPORT_FILE_PATH, OUTPUT_FILE_PATH
     name = trace_path.replace("/", "_")
 
     print("[+] Analysing", trace_path, "with", engine, "engine")
 
     tests_stats = []
-    num_iters = NUM_TEST_ITERS if sampling_rate != 1 else 10
+    # num_iters = NUM_TEST_ITERS if sampling_rate != 1 else 10
     for _ in range(num_iters):
         output = subprocess.check_output(["java", "-Xmx8g", "-cp", "rapid.jar:./lib/*:./lib/jgrapht/*", engine, "-f", "std", "-p", trace_path, "-r", str(sampling_rate)])
         test_stats = parse_rapid_output(output.decode())
@@ -164,18 +166,35 @@ def run_test(trace_path: str, engine: str, sampling_rate: float):
 def main():
     global DATETIME_STR, REPORT_FILE_PATH, OUTPUT_FILE_PATH
 
-    DATETIME_STR = datetime.now().strftime("%d-%b-%Y-%H-%M-%S")
-    REPORT_FILE_PATH = f"report-{DATETIME_STR}.csv"
-    OUTPUT_FILE_PATH = f"output-{DATETIME_STR}.txt"
+    if len(sys.argv) != 2:
+        print(f"[!] Usage: python3 {sys.argv[0]} <config>")
+        sys.exit(1)
 
-    if os.path.exists(REPORT_FILE_PATH):
-        os.unlink(REPORT_FILE_PATH)
+    trace_paths = yaml.load(open(TRACES_LIST_YAML), Loader=yaml.FullLoader)
+    configs = yaml.load(open(CONFIG_LIST_YAML), Loader=yaml.FullLoader)
+
+    config_name = sys.argv[1]
+    config = next((cfg for cfg in configs if cfg["name"] == config_name), None)
+    if config is None:
+        print(f"[!] {config_name} is not a valid config in config.yaml")
+        sys.exit(1)
+
+    DATETIME_STR = datetime.now().strftime("%d-%b-%Y-%H-%M-%S")
+    REPORT_FILE_PATH = f"results/report-{DATETIME_STR}-{config_name}.csv"
+    OUTPUT_FILE_PATH = f"results/output-{DATETIME_STR}-{config_name}.txt"
+
+    if not os.path.exists("results"):
+        os.mkdir("results")
+
     with open(REPORT_FILE_PATH, "w") as f:
         writer = csv.writer(f)
         writer.writerow(TestAggStats.header())
 
-    trace_paths = yaml.load(open(TRACES_LIST_YAML), Loader=yaml.FullLoader)
-    args = product(trace_paths, ENGINES, SAMPLING_RATES)
+    engines = config["engines"]
+    sampling_rate = float(config["sampling_rate"])
+    num_iters = int(config["iterations"])
+
+    args = product(trace_paths, engines, [sampling_rate], [num_iters])
     # for trace_path in trace_paths:
     #     for sr in SAMPLING_RATES:
     #         for eng in ENGINES:
@@ -183,8 +202,8 @@ def main():
                 # args = (trace_path, eng, sr)
 
     # Somehow cpu_count() on NSCC returns 256, which may not actually be the number of cpus allocated to the job
-    # now it is hardcoded to 64 for simplicity
-    with Pool(processes=64) as pool:
+    nprocs = int(check_output("nproc"))
+    with Pool(processes=nprocs-1) as pool:
         pool.starmap(run_test, args)
 
 
