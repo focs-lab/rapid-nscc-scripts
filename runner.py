@@ -181,10 +181,13 @@ def main():
 
     DATETIME_STR = datetime.now().strftime("%d-%b-%Y-%H-%M-%S")
     REPORT_FILE_PATH = f"results/report-{DATETIME_STR}-{config_name}.csv"
-    OUTPUT_FILE_PATH = f"results/output-{DATETIME_STR}-{config_name}.txt"
+    OUTPUT_FILE_PATH = f"~/scratch/rapid/outputs/output-{DATETIME_STR}-{config_name}.txt"
 
     if not os.path.exists("results"):
         os.mkdir("results")
+
+    if not os.path.exists("~/scratch/rapid/outputs"):
+        os.mkdir("~/scratch/rapid/outputs")
 
     with open(REPORT_FILE_PATH, "w") as f:
         writer = csv.writer(f)
