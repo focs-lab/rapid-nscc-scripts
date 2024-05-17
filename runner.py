@@ -32,6 +32,18 @@ class TestStats:
     duration: int
     num_warnings: int
 
+    num_original_acquires: int
+    num_uclock_acquires: int
+    uclock_acquires_rate: float
+
+    num_original_releases: int
+    num_uclock_releases: int
+    uclock_releases_rate: float
+
+    num_original_joins: int
+    num_uclock_joins: int
+    uclock_joins_rate: float
+
 @dataclass
 class TestAggStats:
     test_name: str
@@ -50,6 +62,60 @@ class TestAggStats:
     num_warnings_min: int
     num_warnings_max: int
 
+    num_original_acquires: int
+    num_original_acquires_stdev: float
+    num_original_acquires_median: float
+    num_original_acquires_min: int
+    num_original_acquires_max: int
+
+    num_uclock_acquires: int
+    num_uclock_acquires_stdev: float
+    num_uclock_acquires_median: float
+    num_uclock_acquires_min: int
+    num_uclock_acquires_max: int
+
+    uclock_acquires_rate: float
+    uclock_acquires_rate_stdev: float
+    uclock_acquires_rate_median: float
+    uclock_acquires_rate_min: float
+    uclock_acquires_rate_max: float
+
+    num_original_releases: int
+    num_original_releases_stdev: float
+    num_original_releases_median: float
+    num_original_releases_min: int
+    num_original_releases_max: int
+
+    num_uclock_releases: int
+    num_uclock_releases_stdev: float
+    num_uclock_releases_median: float
+    num_uclock_releases_min: int
+    num_uclock_releases_max: int
+
+    uclock_releases_rate: float
+    uclock_releases_rate_stdev: float
+    uclock_releases_rate_median: float
+    uclock_releases_rate_min: float
+    uclock_releases_rate_max: float
+
+    num_original_joins: int
+    num_original_joins_stdev: float
+    num_original_joins_median: float
+    num_original_joins_min: int
+    num_original_joins_max: int
+
+    num_uclock_joins: int
+    num_uclock_joins_stdev: float
+    num_uclock_joins_median: float
+    num_uclock_joins_min: int
+    num_uclock_joins_max: int
+
+    uclock_joins_rate: float
+    uclock_joins_rate_stdev: float
+    uclock_joins_rate_median: float
+    uclock_joins_rate_min: float
+    uclock_joins_rate_max: float
+
     def header():
         return [
             "name",
@@ -66,7 +132,61 @@ class TestAggStats:
             "num_warnings_stdev",
             "num_warnings_median",
             "num_warnings_min",
-            "num_warnings_max"
+            "num_warnings_max",
+
+            "num_original_acquires",
+            "num_original_acquires_stdev",
+            "num_original_acquires_median",
+            "num_original_acquires_min",
+            "num_original_acquires_max",
+
+            "num_uclock_acquires",
+            "num_uclock_acquires_stdev",
+            "num_uclock_acquires_median",
+            "num_uclock_acquires_min",
+            "num_uclock_acquires_max",
+
+            "uclock_acquires_rate",
+            "uclock_acquires_rate_stdev",
+            "uclock_acquires_rate_median",
+            "uclock_acquires_rate_min",
+            "uclock_acquires_rate_max",
+
+            "num_original_releases",
+            "num_original_releases_stdev",
+            "num_original_releases_median",
+            "num_original_releases_min",
+            "num_original_releases_max",
+
+            "num_uclock_releases",
+            "num_uclock_releases_stdev",
+            "num_uclock_releases_median",
+            "num_uclock_releases_min",
+            "num_uclock_releases_max",
+
+            "uclock_releases_rate",
+            "uclock_releases_rate_stdev",
+            "uclock_releases_rate_median",
+            "uclock_releases_rate_min",
+            "uclock_releases_rate_max",
+
+            "num_original_joins",
+            "num_original_joins_stdev",
+            "num_original_joins_median",
+            "num_original_joins_min",
+            "num_original_joins_max",
+
+            "num_uclock_joins",
+            "num_uclock_joins_stdev",
+            "num_uclock_joins_median",
+            "num_uclock_joins_min",
+            "num_uclock_joins_max",
+
+            "uclock_joins_rate",
+            "uclock_joins_rate_stdev",
+            "uclock_joins_rate_median",
+            "uclock_joins_rate_min",
+            "uclock_joins_rate_max"
         ]
 
     def as_row(self):
@@ -86,7 +206,61 @@ class TestAggStats:
                 self.num_warnings_stdev,
                 self.num_warnings_median,
                 self.num_warnings_min,
-                self.num_warnings_max
+                self.num_warnings_max,
+
+                self.num_original_acquires,
+                self.num_original_acquires_stdev,
+                self.num_original_acquires_median,
+                self.num_original_acquires_min,
+                self.num_original_acquires_max,
+
+                self.num_uclock_acquires,
+                self.num_uclock_acquires_stdev,
+                self.num_uclock_acquires_median,
+                self.num_uclock_acquires_min,
+                self.num_uclock_acquires_max,
+
+                self.uclock_acquires_rate,
+                self.uclock_acquires_rate_stdev,
+                self.uclock_acquires_rate_median,
+                self.uclock_acquires_rate_min,
+                self.uclock_acquires_rate_max,
+
+                self.num_original_releases,
+                self.num_original_releases_stdev,
+                self.num_original_releases_median,
+                self.num_original_releases_min,
+                self.num_original_releases_max,
+
+                self.num_uclock_releases,
+                self.num_uclock_releases_stdev,
+                self.num_uclock_releases_median,
+                self.num_uclock_releases_min,
+                self.num_uclock_releases_max,
+
+                self.uclock_releases_rate,
+                self.uclock_releases_rate_stdev,
+                self.uclock_releases_rate_median,
+                self.uclock_releases_rate_min,
+                self.uclock_releases_rate_max,
+
+                self.num_original_joins,
+                self.num_original_joins_stdev,
+                self.num_original_joins_median,
+                self.num_original_joins_min,
+                self.num_original_joins_max,
+
+                self.num_uclock_joins,
+                self.num_uclock_joins_stdev,
+                self.num_uclock_joins_median,
+                self.num_uclock_joins_min,
+                self.num_uclock_joins_max,
+
+                self.uclock_joins_rate,
+                self.uclock_joins_rate_stdev,
+                self.uclock_joins_rate_median,
+                self.uclock_joins_rate_min,
+                self.uclock_joins_rate_max
             ]
         )
 
@@ -94,6 +268,16 @@ class TestAggStats:
 def aggregate_test_stats(tests_stats: List[TestStats]):
     duration_list = list(map(lambda ts: ts.duration, tests_stats))
     num_warnings_list = list(map(lambda ts: ts.num_warnings, tests_stats))
+
+    num_original_acquires_list = list(map(lambda ts: ts.num_original_acquires, tests_stats))
+    num_uclock_acquires_list = list(map(lambda ts: ts.num_uclock_acquires, tests_stats))
+    uclock_acquires_rate_list = list(map(lambda ts: ts.uclock_acquires_rate, tests_stats))
+    num_original_releases_list = list(map(lambda ts: ts.num_original_releases, tests_stats))
+    num_uclock_releases_list = list(map(lambda ts: ts.num_uclock_releases, tests_stats))
+    uclock_releases_rate_list = list(map(lambda ts: ts.uclock_releases_rate, tests_stats))
+    num_original_joins_list = list(map(lambda ts: ts.num_original_joins, tests_stats))
+    num_uclock_joins_list = list(map(lambda ts: ts.num_uclock_joins, tests_stats))
+    uclock_joins_rate_list = list(map(lambda ts: ts.uclock_joins_rate, tests_stats))
 
     duration_mean = statistics.mean(duration_list)
     duration_stdev = statistics.stdev(duration_list)
@@ -106,6 +290,60 @@ def aggregate_test_stats(tests_stats: List[TestStats]):
     num_warnings_median = statistics.median(num_warnings_list)
     num_warnings_min = min(num_warnings_list)
     num_warnings_max = max(num_warnings_list)
+
+    num_original_acquires_mean = statistics.mean(num_original_acquires_list)
+    num_original_acquires_stdev = statistics.stdev(num_original_acquires_list)
+    num_original_acquires_median = statistics.median(num_original_acquires_list)
+    num_original_acquires_min = min(num_original_acquires_list)
+    num_original_acquires_max = max(num_original_acquires_list)
+
+    num_uclock_acquires_mean = statistics.mean(num_uclock_acquires_list)
+    num_uclock_acquires_stdev = statistics.stdev(num_uclock_acquires_list)
+    num_uclock_acquires_median = statistics.median(num_uclock_acquires_list)
+    num_uclock_acquires_min = min(num_uclock_acquires_list)
+    num_uclock_acquires_max = max(num_uclock_acquires_list)
+
+    uclock_acquires_rate_mean = statistics.mean(uclock_acquires_rate_list)
+    uclock_acquires_rate_stdev = statistics.stdev(uclock_acquires_rate_list)
+    uclock_acquires_rate_median = statistics.median(uclock_acquires_rate_list)
+    uclock_acquires_rate_min = min(uclock_acquires_rate_list)
+    uclock_acquires_rate_max = max(uclock_acquires_rate_list)
+
+    num_original_releases_mean = statistics.mean(num_original_releases_list)
+    num_original_releases_stdev = statistics.stdev(num_original_releases_list)
+    num_original_releases_median = statistics.median(num_original_releases_list)
+    num_original_releases_min = min(num_original_releases_list)
+    num_original_releases_max = max(num_original_releases_list)
+
+    num_uclock_releases_mean = statistics.mean(num_uclock_releases_list)
+    num_uclock_releases_stdev = statistics.stdev(num_uclock_releases_list)
+    num_uclock_releases_median = statistics.median(num_uclock_releases_list)
+    num_uclock_releases_min = min(num_uclock_releases_list)
+    num_uclock_releases_max = max(num_uclock_releases_list)
+
+    uclock_releases_rate_mean = statistics.mean(uclock_releases_rate_list)
+    uclock_releases_rate_stdev = statistics.stdev(uclock_releases_rate_list)
+    uclock_releases_rate_median = statistics.median(uclock_releases_rate_list)
+    uclock_releases_rate_min = min(uclock_releases_rate_list)
+    uclock_releases_rate_max = max(uclock_releases_rate_list)
+
+    num_original_joins_mean = statistics.mean(num_original_joins_list)
+    num_original_joins_stdev = statistics.stdev(num_original_joins_list)
+    num_original_joins_median = statistics.median(num_original_joins_list)
+    num_original_joins_min = min(num_original_joins_list)
+    num_original_joins_max = max(num_original_joins_list)
+
+    num_uclock_joins_mean = statistics.mean(num_uclock_joins_list)
+    num_uclock_joins_stdev = statistics.stdev(num_uclock_joins_list)
+    num_uclock_joins_median = statistics.median(num_uclock_joins_list)
+    num_uclock_joins_min = min(num_uclock_joins_list)
+    num_uclock_joins_max = max(num_uclock_joins_list)
+
+    uclock_joins_rate_mean = statistics.mean(uclock_joins_rate_list)
+    uclock_joins_rate_stdev = statistics.stdev(uclock_joins_rate_list)
+    uclock_joins_rate_median = statistics.median(uclock_joins_rate_list)
+    uclock_joins_rate_min = min(uclock_joins_rate_list)
+    uclock_joins_rate_max = max(uclock_joins_rate_list)
 
     return TestAggStats(tests_stats[0].test_name,
                         tests_stats[0].test_engine,
@@ -121,7 +359,61 @@ def aggregate_test_stats(tests_stats: List[TestStats]):
                         num_warnings_stdev=num_warnings_stdev,
                         num_warnings_median=num_warnings_median,
                         num_warnings_min=num_warnings_min,
-                        num_warnings_max=num_warnings_max)
+                        num_warnings_max=num_warnings_max,
+
+                        num_original_acquires=num_original_acquires_mean,
+                        num_original_acquires_stdev=num_original_acquires_stdev,
+                        num_original_acquires_median=num_original_acquires_median,
+                        num_original_acquires_min=num_original_acquires_min,
+                        num_original_acquires_max=num_original_acquires_max,
+
+                        num_uclock_acquires=num_uclock_acquires_mean,
+                        num_uclock_acquires_stdev=num_uclock_acquires_stdev,
+                        num_uclock_acquires_median=num_uclock_acquires_median,
+                        num_uclock_acquires_min=num_uclock_acquires_min,
+                        num_uclock_acquires_max=num_uclock_acquires_max,
+
+                        uclock_acquires_rate=uclock_acquires_rate_mean,
+                        uclock_acquires_rate_stdev=uclock_acquires_rate_stdev,
+                        uclock_acquires_rate_median=uclock_acquires_rate_median,
+                        uclock_acquires_rate_min=uclock_acquires_rate_min,
+                        uclock_acquires_rate_max=uclock_acquires_rate_max,
+
+                        num_original_releases=num_original_releases_mean,
+                        num_original_releases_stdev=num_original_releases_stdev,
+                        num_original_releases_median=num_original_releases_median,
+                        num_original_releases_min=num_original_releases_min,
+                        num_original_releases_max=num_original_releases_max,
+
+                        num_uclock_releases=num_uclock_releases_mean,
+                        num_uclock_releases_stdev=num_uclock_releases_stdev,
+                        num_uclock_releases_median=num_uclock_releases_median,
+                        num_uclock_releases_min=num_uclock_releases_min,
+                        num_uclock_releases_max=num_uclock_releases_max,
+
+                        uclock_releases_rate=uclock_releases_rate_mean,
+                        uclock_releases_rate_stdev=uclock_releases_rate_stdev,
+                        uclock_releases_rate_median=uclock_releases_rate_median,
+                        uclock_releases_rate_min=uclock_releases_rate_min,
+                        uclock_releases_rate_max=uclock_releases_rate_max,
+
+                        num_original_joins=num_original_joins_mean,
+                        num_original_joins_stdev=num_original_joins_stdev,
+                        num_original_joins_median=num_original_joins_median,
+                        num_original_joins_min=num_original_joins_min,
+                        num_original_joins_max=num_original_joins_max,
+
+                        num_uclock_joins=num_uclock_joins_mean,
+                        num_uclock_joins_stdev=num_uclock_joins_stdev,
+                        num_uclock_joins_median=num_uclock_joins_median,
+                        num_uclock_joins_min=num_uclock_joins_min,
+                        num_uclock_joins_max=num_uclock_joins_max,
+
+                        uclock_joins_rate=uclock_joins_rate_mean,
+                        uclock_joins_rate_stdev=uclock_joins_rate_stdev,
+                        uclock_joins_rate_median=uclock_joins_rate_median,
+                        uclock_joins_rate_min=uclock_joins_rate_min,
+                        uclock_joins_rate_max=uclock_joins_rate_max)
 
 def output_aggregate_stats(test_agg_stats: TestAggStats):
     with open(REPORT_FILE_PATH, "a") as f:
@@ -131,13 +423,54 @@ def output_aggregate_stats(test_agg_stats: TestAggStats):
 def parse_rapid_output(output: str) -> TestStats:
     lines = output.splitlines()
 
+    num_original_acquires = 0
+    num_uclock_acquires = 0
+    uclock_acquires_rate = 0
+    num_original_releases = 0
+    num_uclock_releases = 0
+    uclock_releases_rate = 0
+    num_original_joins = 0
+    num_uclock_joins = 0
+    uclock_joins_rate = 0
+
     for line in lines:
         if "Number of 'racy' events" in line:
             num_warnings = int(line.split(" = ")[1])
         if "Time for analysis" in line:
             duration = int(line.split(" ")[4])
 
-    return TestStats(test_name="", test_engine="", test_sampling_rate=0, duration=duration, num_warnings=num_warnings)
+        if "Num original acquires: " in line:
+            num_original_acquires = int(line.split(": ")[1])
+        if "Num uclock acquires: " in line:
+            num_uclock_acquires = int(line.split(": ")[1])
+
+        if "Num original releases: " in line:
+            num_original_releases = int(line.split(": ")[1])
+        if "Num uclock releases: " in line:
+            num_uclock_releases = int(line.split(": ")[1])
+
+        if "Num original joins: " in line:
+            num_original_joins = int(line.split(": ")[1])
+        if "Num uclock joins: " in line:
+            num_uclock_joins = int(line.split(": ")[1])
+
+    if num_original_acquires != 0:
+        uclock_acquires_rate = num_uclock_acquires / num_original_acquires
+    if num_original_releases != 0:
+        uclock_releases_rate = num_uclock_releases / num_original_releases
+    if num_original_joins != 0:
+        uclock_joins_rate = num_uclock_joins / num_original_joins
+
+    return TestStats(test_name="", test_engine="", test_sampling_rate=0, duration=duration, num_warnings=num_warnings,
+                     num_original_acquires=num_original_acquires,
+                     num_uclock_acquires=num_uclock_acquires,
+                     uclock_acquires_rate=uclock_acquires_rate,
+                     num_original_releases=num_original_releases,
+                     num_uclock_releases=num_uclock_releases,
+                     uclock_releases_rate=uclock_releases_rate,
+                     num_original_joins=num_original_joins,
+                     num_uclock_joins=num_uclock_joins,
+                     uclock_joins_rate=uclock_joins_rate)
 
 def run_test(trace_path: str, engine: str, sampling_rate: float, num_iters: int):
     global DATETIME_STR, REPORT_FILE_PATH, OUTPUT_FILE_PATH
@@ -181,13 +514,13 @@ def main():
 
     DATETIME_STR = datetime.now().strftime("%d-%b-%Y-%H-%M-%S")
     REPORT_FILE_PATH = f"results/report-{DATETIME_STR}-{config_name}.csv"
-    OUTPUT_FILE_PATH = f"~/scratch/rapid/outputs/output-{DATETIME_STR}-{config_name}.txt"
+    OUTPUT_FILE_PATH = os.path.expanduser(f"~/scratch/rapid/outputs/output-{DATETIME_STR}-{config_name}.txt")
 
     if not os.path.exists("results"):
         os.mkdir("results")
 
-    if not os.path.exists("~/scratch/rapid/outputs"):
-        os.mkdir("~/scratch/rapid/outputs")
+    if not os.path.exists(os.path.expanduser("~/scratch/rapid/outputs")):
+        os.mkdir(os.path.expanduser("~/scratch/rapid/outputs"))
 
     with open(REPORT_FILE_PATH, "w") as f:
         writer = csv.writer(f)
